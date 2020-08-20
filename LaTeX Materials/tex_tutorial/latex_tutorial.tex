@@ -1,0 +1,713 @@
+\documentclass{beamer}
+
+\usetheme{Madrid} % Sets details for virtually all stylistic choices in presentation
+
+\usepackage{amsmath,multicol,tikz,url,mathrsfs}
+\usepackage[T1]{fontenc} % Output accented letters in correct font (i.e. consistently with font setting)
+\usepackage[utf8]{inputenc} % Input accented letters directly from keyboard
+\usepackage[absolute,overlay]{textpos} % Textblock for position specification
+
+
+\definecolor{MDB}{RGB}{33, 49, 77} % Mines Dark Blue
+\definecolor{MLB}{RGB}{146, 162, 189} % Mines Light Blue
+\definecolor{MA}{RGB}{210, 73, 42} % Mines Accent
+\definecolor{MB}{RGB}{38, 63, 106} % Mines Blue
+\definecolor{MPB}{RGB}{206, 213, 221} % Mines Pale Blue
+\definecolor{MCG}{RGB}{178, 180, 179} % Mines Cool Gray
+\definecolor{MM}{RGB}{139, 141, 142} % Mines Metallic
+
+
+\setbeamercolor{palette primary}{bg=MDB,fg=white}
+\setbeamercolor{palette secondary}{bg=MLB,fg=white}
+\setbeamercolor{palette tertiary}{bg=MB,fg=white}
+\setbeamercolor{palette quaternary}{bg=MLG,fg=white}
+\setbeamercolor{structure}{fg=MB} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=MB} % TOC sections
+\setbeamercolor{block title alerted}{fg=white,bg=MA} % alert blocks
+\setbeamercolor{block body alerted}{fg=MDB,bg=MA!10!white}
+\AtBeginEnvironment{alertblock}{\setbeamercolor{item projected}{bg=MA}}
+\setbeamercolor{block title example}{fg=white,bg=MM} % example blocks
+\setbeamercolor{block body example}{fg=MDB,bg=MM!10!white,use=MM}
+\AtBeginEnvironment{exampleblock}{\setbeamercolor{item projected}{bg=MCG}}
+
+%Information to be included in the title page:
+\title[\LaTeX Tutorial]{AMS Bootcamp: LaTeX Tutorial}
+\author{Justin Garrish}
+\institute[CSM]{Colorado School of Mines}
+\date[17 Aug 2020]{17 August 2020}
+
+
+
+\begin{document}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsubsection]
+  \end{frame}
+}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Introduction to LaTeX} %------------------------- Introduction -------------------------%
+\begin{frame}{What is latex?}
+	\begin{itemize}
+		\item Latex is a stable dispersion of polymer microparticles in an aqueous medium.
+		\item It is found in nature, but synthetic latexes can be made by polymerizing a monomer such as styrene that has been emulsified with surfactants.
+		\item Latex as found in nature is a milky fluid found in 10\% of all flowering plants.
+		\item It is a complex emulsion consisting of 
+			\begin{itemize}
+				\item proteins
+				\item alkaloids
+				\item starches
+				\item sugars
+				\item oils\dots
+			\end{itemize}
+	\end{itemize}
+	\only<2>{
+	\begin{textblock*}{8cm}(2.5cm,2.5cm) % {block width} (coords)
+		\includegraphics[width=8cm]{facepalm.png}
+	\end{textblock*}
+	}
+\end{frame}
+
+\begin{frame}{\LaTeX and \TeX}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item<1-> TeX is a typesetting system for  writing developed in 1978 by Donald Knuth.
+			\item<2-> The letters T, E, X in TeX come from the Greek letters tau, epsilon, and chi.
+			\item<3-> LaTeX, a document preparation system containing TeX macros for ease of access, was developed by Leslie Lamport in the 1980s (initial release 1984).
+		\end{itemize}
+	\columnbreak
+		\begin{figure}
+			\includegraphics[width = 2.75cm]{don_knuth.png}\ \includegraphics[width = 2.75cm]{les_lamport.png}
+			\caption{Donald Knuth (left) and Leslie Lamport (right)}
+		\end{figure}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}{Learning Outcomes}
+	By the end of this tutorial, participants will be able to\dots
+	\begin{itemize}
+		\item Write a simple LaTeX article with conscious awareness of preamble and document content.
+		\item Typeset documents containing thoughtfully formatted mathematical expressions/statements.
+		\item Utilize common commands and environments relevant to scientific and mathematical communication.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Uses of LaTeX}
+	\begin{itemize}
+		\item<1-> LaTeX allows users to typeset scientific and technical documents, including
+			\begin{itemize}
+				\item Journal articles
+				\item Presentations
+				\item Textbooks
+				\item Posters
+				\item Course notes (Student\footnote{This typically takes some familiarity with LaTeX and planning in advance to be effective.  Can discuss this afternoon!} or Instructor)
+			\end{itemize}
+		\item<2-> Today, LaTeX-based equation editors are integrated into several common tools utilized in academia:
+			\begin{itemize}
+				\item Word processors (e.g. MS Word, Apple Pages)
+				\item Presentation tools (e.g. MS PowerPoint, Apple Keynote)
+				\item Learning management and testing tools (e.g. Canvas, GradeScope)
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Features}
+	\begin{itemize}
+		\item High-quality typesetting of complicated mathematical formulae
+		\item Clean, sensible default layouts to begin writing with minimal effort
+		\item Fine-tuned control over stylistic details available as needed or desired
+		\item Characters from several alphabets and languages
+		\item Dedicated functionality for organizing documents and presenting information
+	\end{itemize}
+	\vspace{0.5cm}
+
+	\begin{multicols}{3}
+		\begin{figure}
+			\resizebox{0.275\textwidth}{!}{
+			\begin{tikzpicture}
+				\draw[thick] (0,0) -- (5,0);
+				\draw[thick] (5,0) -- (2.5,4.330127018922193);
+				\draw[thick] (2.5,4.330127018922193) -- (0,0);
+				\fill[black] (0,0) -- (5,0) -- (2.5,4.330127018922193); \pause
+				\draw[thick] (2.5,0) -- (1.25,2.16506);
+				\draw[thick] (1.25,2.16505) -- (3.75,2.16505);
+				\draw[thick] (3.75,2.16505) -- (2.5,0);
+				\fill[white] (2.5,0) -- (1.25,2.16506) -- (3.75,2.16505); \pause
+				\draw[thick] (1.25,0) -- (1.875,1.082532);
+				\draw[thick] (1.875,1.082532) -- (0.625,1.082532);
+				\draw[thick] (0.625,1.082532) -- (1.25,0);
+				\fill[white] (1.25,0) -- (1.875,1.082532) -- (0.625,1.082532);
+				\draw[thick] (3.75,0) -- (4.375,1.082532);
+				\draw[thick] (4.375,1.082532) -- (3.125,1.082532);
+				\draw[thick] (3.125,1.082532) -- (3.75,0);
+				\fill[white] (3.75,0) -- (4.375,1.082532) -- (3.125,1.082532);
+				\draw[thick] (2.5,2.16506) -- (3.125,3.247595);
+				\draw[thick] (3.125,3.247595) -- (1.875,3.247595);
+				\draw[thick] (1.875,3.247595) -- (2.5,2.16506);
+				\fill[white] (2.5,2.16506) -- (3.125,3.247595) -- (1.875,3.247595); \pause
+				\fill[white] (0.3125,0.541266) -- (0.625,0) -- (0.9375,0.541266);
+				\fill[white] (0.9375,1.623798) -- (1.25,1.082532) -- (1.5625,1.623798);
+				\fill[white] (1.5625,0.541266) -- (1.875,0) -- (2.1875,0.541266);
+				\fill[white] (1.5625,2.706329) -- (1.875,2.165064) -- (2.1875,2.706329);
+				\fill[white] (2.1875,3.788861) -- (2.5,3.247595) -- (2.8125,3.788861);
+				\fill[white] (2.8125,2.706329) -- (3.125,2.165064) -- (3.4375,2.706329);
+				\fill[white] (2.8125,0.541266) -- (3.125,0) -- (3.4375,0.541266);
+				\fill[white] (3.4375,1.623798) -- (3.75,1.082532) -- (4.0625,1.623798);
+				\fill[white] (4.0625,0.541266) -- (4.375,0) -- (4.6875,0.541266);
+			\end{tikzpicture}
+			}
+		\caption{Drawn in TikZ}
+		\end{figure}
+	\columnbreak
+	Aligned equations\vspace{-1cm}
+		\begin{align*}
+			\dot x\ &=\ \mu\left(x-\frac13x^3-y\right)\\
+			\dot y\ &=\ \dot y\frac1{\mu}x
+		\end{align*}
+	\columnbreak
+		\begin{figure}
+			\centering
+			\includegraphics[width = 0.2\textwidth]{turbulent.png}
+			\caption{Local .png image} %%%%% Include citation
+		\end{figure}
+	\end{multicols}
+\end{frame}
+
+\section{LaTeX Basics} %------------------------- Basics -------------------------%
+
+\subsection{Hello, World!}
+
+\begin{frame}{LaTeX Commands}
+	\begin{itemize}
+		\item Indicated by a backslash ``\textbackslash'' preceding the command name
+		\item Processed by LaTeX as a set of instructions
+		\item General structure:
+			\begin{semiverbatim}
+				\\commandname[<optional arguments>]\{<mandatory arguments>\}
+			\end{semiverbatim}
+	\end{itemize}
+	\onslide<4->{
+	\begin{block}{Note}
+		Not all commands have optional arguments.
+	\end{block}
+	}
+\end{frame}
+
+\begin{frame}{Document Class}
+	\begin{semiverbatim}
+		\\documentclass[<options>]\{<class>\}
+	\end{semiverbatim}
+	\begin{itemize}
+		\item<1-> The document class sets the default layout and format options 
+		\item<2-> Some common classes are
+			\begin{itemize}
+				\item article
+				\item report
+				\item beamer
+				\item book
+				\item minimal
+			\end{itemize}
+		\item<3-> The available options depend on the choice of class
+	\end{itemize}
+	\only<4>{
+	\begin{exampleblock}{Example}
+	Journal article with A4 paper size and 12-point font
+		\begin{semiverbatim}
+			\\documentclass[a4paper,12pt]\{article\}
+		\end{semiverbatim}
+	\end{exampleblock}
+	}
+\end{frame}
+
+\begin{frame}[fragile]{Hello, World!}
+	\begin{semiverbatim}
+		\\documentclass\{article\}
+		
+		\\begin\{document\}
+		
+ 			Hello, World!
+		
+		\\end\{document\}
+	\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{General Layout}
+	The \texttt{Hello, World!} program illustrates the two primary components of a LaTeX document:
+		\begin{itemize}
+			\item<1-> Preamble
+				\begin{itemize}
+					\item Document properties (including required \texttt{\textbackslash documentclass} \textit{command})
+					\item Packages and libraries
+					\item Style and format settings (whole document)
+					\item Title-page information
+					\item Custom commands
+				\end{itemize}
+			\item<2-> Document
+				\begin{itemize}
+					\item All writing and displayed content contained within \texttt{document} \textit{environment}
+					\item Many settings may be changed within the document part (e.g. for local formatting)
+					\item Can be organized into sections, subsections, paragraphs, etc.
+				\end{itemize}
+		\end{itemize}
+\end{frame}
+
+\subsection{Commands and Environments}
+
+\begin{frame}{Common Commands}
+\framesubtitle{Load Packages}
+	\textbf{Preamble}
+	\begin{semiverbatim}
+		\\usepackage[<options>]\{<packages>\}
+	\end{semiverbatim}
+	\begin{itemize}
+		\item Additional commands, options, and environments available
+		\item Multiple packages can be listed within the same pair of braces (with same/no options declared)
+		\item Packages can inherit options from the \texttt{\textbackslash documentclass} command
+	\end{itemize}
+	\onslide<2>{
+	\begin{exampleblock}{Example}
+		Loads packages for mathematics typesetting, enumeration and multiple-column formatting, and graphical tools:
+			\begin{semiverbatim}
+				\\usepackage\{amsmath, amsthm, amssymb, mathtools, enumitem, multicols, tikz, pgfplots\}
+			\end{semiverbatim}
+	\end{exampleblock}
+	}
+\end{frame}
+
+\begin{frame}{Common Commands}
+\framesubtitle{Title Page}
+	\textbf{Preamble}
+	\begin{semiverbatim}
+		\\title\{<Document Title>\}
+		
+		\\author\{<Name>\}
+		
+		\\date\{<Date>\}
+	\end{semiverbatim}
+	\textbf{Document}
+	\begin{semiverbatim}
+		\\maketitle
+	\end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Common Commands}
+\framesubtitle{Sectioning}
+	\textbf{Document}
+	\begin{semiverbatim}
+		\\section\{<Section Title>\}
+		
+		\\subsection\{<Subsection Title>\}
+		
+		\\subsubsection\{<Subsubsection Title>\}
+	\end{semiverbatim}
+	\begin{itemize}
+		\item Sections are numbered in the order that they appear within the \texttt{document} environment by default.
+		\item An asterisk ``*'' between the command name and braces suppresses the numbering for that section.
+	\end{itemize}
+	\onslide<2>{
+	\begin{exampleblock}{Example}
+			\begin{semiverbatim}
+				\\section*\{Cheesy Maths Jokes\}
+				
+				\\subsection*\{Infinitely Many Mathematicians\\dots\}
+			\end{semiverbatim}
+	\end{exampleblock}
+	}
+\end{frame}
+
+\begin{frame}{Common Commands}
+\framesubtitle{Environments}
+	\textbf{Document}
+	\begin{semiverbatim}
+		\\begin\{<environment>\}
+		
+		 <Content>
+			
+		\\end\{<environment>\}
+	\end{semiverbatim}
+	\onslide<2->{
+	\begin{itemize}
+		\item Environments alter the typesetting rules
+		\item Can be nested when multiple environments are in play
+		\item The \texttt{document} environment is necessary at the outermost level of each LaTeX file
+	\end{itemize}
+	More to come\dots
+	}
+\end{frame}
+
+\begin{frame}{Common Commands}
+\framesubtitle{Miscellany}
+	\begin{itemize}
+		\item<1-> \texttt{\textbackslash textbf\{\}}, \texttt{\textbackslash textit\{\}}, \texttt{\textbackslash underline\{\}}
+		\item<2-> \texttt{\textbackslash textrm\{\}}, \texttt{\textbackslash textsf\{\}}, \texttt{\textbackslash texttt\{\}}, \texttt{\textbackslash textsc\{\}}, \texttt{\textbackslash emph\{\}}
+		\item<3-> \texttt{\textbackslash bibliography\{\}}, \texttt{\textbackslash cite\{\}}
+		\item<4-> \texttt{\textbackslash label\{\}}, \texttt{\textbackslash ref\{\}}, \texttt{\textbackslash pageref\{\}}, \texttt{\textbackslash footnote\{\}}
+		\item<5-> \texttt{\textbackslash tiny}, \texttt{\textbackslash scriptsize}, \texttt{\textbackslash footnotesize}, \texttt{\textbackslash small}, \texttt{\textbackslash large}, \texttt{\textbackslash huge}
+		\item<6-> \texttt{\textbackslash centering}, \texttt{\textbackslash raggedright}, \texttt{\textbackslash raggedleft}
+		\item<7-> \texttt{\textbackslash dots}, \texttt{\textbackslash cdots}, \texttt{\textbackslash vdots}, \texttt{\textbackslash hdots}, \texttt{\textbackslash ddots}
+		\item<8-> \texttt{\textbackslash newline}, \texttt{\textbackslash newpage}, \texttt{\textbackslash vspace\{\}}, \texttt{\textbackslash hspace\{\}}, \texttt{\textbackslash rule\{\}\{\}}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Listing}
+	\begin{itemize}
+		\item<1-> ``Listing environments'' provide various formats for listed content
+		\item<2-> Items in the list are distinguished by the \texttt{\textbackslash item} command.
+			\begin{itemize}
+				\item \texttt{itemize} -- bulleted list
+				\item \texttt{enumerate} -- ordered list\footnote{With package \texttt{enumitem}, the list appearance may be easily customized, e.g. (a), (b), (c) instead of 1., 2., 3.}
+				\item \texttt{description} -- Description list; requires command \texttt{\textbackslash item[<description>]}, with \texttt{<description>} used instead of a bullet or number.
+			\end{itemize}
+	\end{itemize}
+	\onslide<3->{
+	\begin{exampleblock}{Example}
+		\begin{semiverbatim}
+			\\begin\{description\}
+			
+			\\item[First] The first thing
+				
+			\\item[Second] A second thing
+				
+			\\end\{description\}
+		\end{semiverbatim}
+	\end{exampleblock}
+	}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Floating Bodies}
+	A \textbf{float} is a container for content in a document that cannot be broken over a page (as opposed to, say, freely typed text).
+	\begin{semiverbatim}
+		\\begin\{<float>\}[placement]
+		
+		 <Content>
+			
+		\\end\{<float>\}
+	\end{semiverbatim}
+	\begin{itemize}
+		\item<2-> Common floats:
+			\begin{itemize}
+				\item \texttt{table}
+				\item \texttt{figure}
+			\end{itemize}
+		\item<3-> Placement options
+			\begin{itemize}
+				\item t -- ``top''
+				\item h -- ``here''
+				\item b -- ``bottom''
+				\item p -- ``separate page''
+				\item ! -- ``override \LaTeX parameters''
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Float Example}
+	\setbeamertemplate{caption}[default]
+	\begin{figure}[h]
+		\includegraphics[width=0.3\textwidth]{math_universal.png}
+		\label{fig:math_universal}
+		\caption{Re-creation of South Park's iconic ``Math is universal'' poster. https://andyborne.com/math/freestuff.html}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Float Example}
+	\begin{exampleblock}{Math is universal}
+		\begin{semiverbatim}
+			\\begin\{figure\}[h]
+			
+			\\includegraphics[width=0.3\\textwidth]\{math\_universal.png\}
+			
+			\\label\{fig:math\_universal\}
+			
+			\\caption\{Re-creation of South Park's iconic ``Math is universal'' poster. https://andyborne.com/math/freestuff.html\}
+
+			\\end\{figure\}
+		\end{semiverbatim}
+	\end{exampleblock}
+	\begin{alertblock}{Notes}
+		\begin{itemize}
+			\item The commands \texttt{\textbackslash includegraphics}, \texttt{\textbackslash caption}, and \texttt{\textbackslash label} belong \emph{inside} the \texttt{figure} (or other \texttt{<float>}) environment
+			\item The marker used for \texttt{\textbackslash label\{<marker>\}} is the same one used to reference this figure elsewhere in the document with \texttt{\textbackslash ref\{<marker>\}}
+		\end{itemize}
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Tables}
+	\begin{semiverbatim}
+		\\begin\{tabular\}[<position>]\{<columns>\}
+		
+		 <Content>
+			
+		\\end\{tabular\}
+	\end{semiverbatim}
+	\begin{itemize}
+		\item<2-> The \texttt{tabular} environment produces a sequence of rows of items, aligned vertically (in columns).
+		\item<3-> Position does not need to be specified by default, and can also be inherited if the \texttt{tabular} environment is nested within a \texttt{table} (float) environment.
+		\item<4-> The \texttt{<columns>} option conveys how many columns the table contains and the justification (alignment) of each:
+			\begin{itemize}
+				\item l -- left-justified
+				\item c -- center-justified
+				\item r -- right-justified
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Environments}
+	\framesubtitle{Table Example}
+	\begin{exampleblock}{Table of Greek letters}
+		\begin{semiverbatim}
+			\\begin\{table\}[t]
+			
+			\\caption\{Some Greek Letters\}
+			
+				\\begin\{tabular\}\{| c | c | c |\}\\hline
+				
+				Letter \& Lowercase \& Uppercase \\\\\ \\hline
+				
+				alpha \& \$\\alpha\$ \& \$\\mathrm A\$ \\\\\ \\hline
+				
+				beta \& \$\\beta\$ \& \$\\mathrm B\$ \\\\\ \\hline
+				
+				gamma \& \$\\gamma\$ \& \$\\Gamma\$ \\\\\ \\hline
+				
+				\\end\{tabular\}
+				
+			\\label\{tbl:greek\}
+
+			\\end\{table\}
+		\end{semiverbatim}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Common Environments}{Table Example}
+	\begin{table}[t]
+		\caption{Some Greek Letters}
+		\begin{tabular}{| c | c | c |}\hline
+			Letter & Lowercase & Uppercase\\ \hline
+			alpha & $\alpha$ & $\mathrm A$ \\ \hline
+			beta & $\beta$ & $\mathrm B$ \\ \hline
+			gamma & $\gamma$ & $\Gamma$ \\ \hline
+		\end{tabular}
+		\label{tbl:greek}
+	\end{table}
+	\onslide<2->{
+	\begin{alertblock}{Notes}
+		\begin{itemize}
+			\item Vertical bars within the \texttt{<columns>} option add vertical lines at corresponding boarders to columns
+			\item The command \texttt{\textbackslash\textbackslash} moves to the next row of the table
+			\item The command \texttt{\textbackslash hline} adds a horizontal line at the boarder above the following row
+		\end{itemize}
+	\end{alertblock}
+	}
+\end{frame}
+
+\begin{frame}{Common Environments}
+\framesubtitle{Text Environments}
+Text environments create a block of text with modified typesetting rules for various circumstances:
+	\begin{itemize}
+		\item \texttt{quote} -- Indented quote block
+		\item \texttt{quotation} -- Like quote, but with indented paragraphs
+		\item \texttt{verse} -- Like quotation, but indentation inverted
+		\item \texttt{verbatim} -- Monospaced text with literal characters (good for replicating computer code in LaTeX)
+		\item \texttt{verbatim*} -- Like verbatim, but with spaces as \texttt{\char32}
+	\end{itemize}
+\end{frame}
+
+\subsection{Bibliographies}
+
+\begin{frame}{BibTeX}
+\framesubtitle{Background}
+	\begin{itemize}
+		\item BibTeX is a reference management and typesetting tool designed for use with LaTeX.
+		\item<2-> Bibliographic information for each source is written in plain text and saved with the \texttt{.bib} extension.
+		\item<3-> Editors (e.g. BibDesk, EndNote) exist to provide an interface beyond plain text
+		\item<4-> References are formatted automatically based on the \texttt{\textbackslash bibliographystyle\{<style>\}} (preamble) command.
+		\item<5-> The command \texttt{\textbackslash bibliography\{<filename>\}} places the bibliography in the document.
+		\item<6-> Each source in BibTeX has an associated reference key (user-determined) for use in citations.
+			\begin{itemize}
+				\item The command \texttt{\textbackslash cite\{<key>\}} will place an in-line citation to the corresponding reference.
+				\item Only sources that are cited in line will be added to the displayed reference list.
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{BibTeX}
+\framesubtitle{Example BibTeX Code}
+The following would be placed in the \texttt{.bib} file corresponding to the LaTeX document:
+	\begin{exampleblock}{}
+		\begin{semiverbatim}
+			@article\{Man2002, \% cite key
+			title=\{The oral glucose minimal model: Estimation of insulin sensitivity from a meal test\},
+			author=\{C. D. Man and A. Caumo and C. Cobelli\},
+			journal=\{IEEE Transactions on Biomedical Engineering\},
+			year=\{2002\},
+			volume=\{49\},
+			pages=\{419-429\}
+			\}
+		\end{semiverbatim}
+	\end{exampleblock}
+\end{frame}
+
+\section{Typesetting Mathematics} %------------------------- Typesetting Mathematics -------------------------%
+
+\subsection{Inline Mathematics}
+
+\begin{frame}{Math Mode}
+In order for text within a paragraph to be typeset as mathematics, a special environment is used: \texttt{\$\dots\$} or \texttt{\textbackslash(\dots\textbackslash)}.
+
+	\begin{exampleblock}{Example}
+		Euler's Identity: \texttt{\$e\^{}\{i\textbackslash pi\}+1=0\$}
+	\end{exampleblock}	\begin{itemize}
+		\item<2-> \textbf{Math mode} refers to the designation of special typesetting rules in effect within certain environments.
+		\item<3-> Normal text is not processed as such within math mode (words are processed like strings of successive variables, and spaces are skipped, for instance).
+		\item<4-> Math mode offers access to a wide assortment of commands relevant to mathematics, and to scientific and technical writing involving specialized notation
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Mathematical Commands and Operators}
+\framesubtitle{A very small sample}
+	\begin{center}
+		\begin{tabular}{| l | c || l | c |}\hline
+			Command & Example & Command & Example\\ \hline
+			\texttt{\textbackslash rightarrow} & $\rightarrow$ & \texttt{\textbackslash Rightarrow} & $\Rightarrow$ \\ \hline
+			\texttt{\textbackslash rightharpoonup} & $\rightharpoonup$ & \texttt{\textbackslash frac\{a\}\{b\}} & $\frac ab$  \\ \hline
+			\texttt{\textbackslash in} & $\in$ & \texttt{\textbackslash ni} & $\ni$ \\ \hline
+			\texttt{\textbackslash sum\_\{j=1\}\^{}n} & $\sum_{j=1}^n$ & \texttt{\textbackslash prod\_\{j=1\}\^{}n} & $\prod_{j=1}^n$ \\ \hline
+			\texttt{\textbackslash partial} & $\partial$ & \texttt{\textbackslash int\_a\^{}b} & $\int_a^b$ \\ \hline
+			\texttt{\textbackslash iint\_a\^{}b} & $\iint_a^b$ & \texttt{\textbackslash oint\_a\^{}b} & $\oint_a^b$ \\ \hline
+		\end{tabular}
+		
+		\vspace{0.5cm}
+		
+		\onslide<2->{
+		\begin{tabular}{| l | c || l | c |}\hline
+			Operator & Example & Operator & Example\\ \hline
+			\texttt{\textbackslash lim\_\{x\textbackslash to\textbackslash infty\}} & $\lim_{x\to\infty}$ & \texttt{\textbackslash max\_\{n\textbackslash le c\}} & $\max_{n\le c}$ \\ \hline
+			\texttt{\textbackslash arcsin} & $\arcsin$ & \texttt{\textbackslash cos\^{}2} & $\cos^2$ \\ \hline
+			\texttt{\textbackslash exp} & $\exp$ & \texttt{\textbackslash ln} & $\ln$ \\ \hline
+		\end{tabular}
+		}
+	\end{center}
+\end{frame}
+
+\subsection{Display Mathematics}
+
+\begin{frame}{Display Mode}
+\framesubtitle{Math Environments}
+	\begin{itemize}
+		\item Several environments exist that typeset mathematical symbols in a larger format than their inline counterparts.
+			\begin{itemize}
+				\item \texttt{\textbackslash begin\{equation\}\dots\textbackslash end\{equation\}} -- numbered equation (single label for environment, regardless of number of equations)
+				\item \texttt{\textbackslash[\dots\textbackslash]} -- equation with numbering suppressed (can use \texttt{equation*} environment, too)
+				\item \texttt{\textbackslash begin\{align\}\dots\textbackslash end\{align\}} -- multiple equations (or columns of equations) with vertical alignment specified by ``\&'' (one label per equation)
+			\end{itemize}
+		\item<2-> Within the environments above, math is set in ``display style'' (as opposed to the ``text style'' of inline math)
+		\item<3-> Typically used for the mathematical statements within important results, esp. to be referenced elsewhere
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Display Mode}
+\framesubtitle{Single-Equation Example}
+	\begin{exampleblock}{Code}
+		\begin{semiverbatim}
+		\textbackslash begin\{equation\}
+		
+		\textbackslash forall\textbackslash varepsilon>0,\textbackslash,\textbackslash exists\textbackslash delta>0\mbox{ such that }\textbackslash left\textbackslash lvert x-c\textbackslash right\textbackslash rvert>\textbackslash delta\textbackslash Rightarrow\textbackslash left\textbackslash lvert f(x)-L\textbackslash right\textbackslash rvert>\textbackslash varepsilon.
+		
+		\textbackslash end\{equation\}
+		\end{semiverbatim}
+	\end{exampleblock}
+	
+	\begin{equation}
+		\forall\varepsilon>0,\,\exists\delta>0\mbox{ such that }\left\lvert x-c\right\rvert<\delta\Rightarrow\left\lvert f(x)-L\right\rvert<\varepsilon.
+	\end{equation}
+\end{frame}
+
+\begin{frame}[fragile]{Display Mode}
+\framesubtitle{Multiple-Equation Example}
+	\begin{exampleblock}{Code}
+		\begin{semiverbatim}
+			\textbackslash begin\{align\}
+				\textbackslash{}dot G(t)\&=-\textbackslash{}left[p\_1+X(t)\textbackslash{}right]G(t)+p\_1\textbackslash{}cdot G\_b\&
+				    G(0)\&=G\_b,\textbackslash\textbackslash
+				\textbackslash{}dot X(t)\&=-p\_2X+p\_3\textbackslash{}left[I(t)-I\_b\textbackslash{}right],\&
+				    X(0)\&=0.
+			\textbackslash end\{align\}
+		\end{semiverbatim}
+	\end{exampleblock}
+	
+	\begin{align}
+		\dot G(t)&=-\left[p_1+X(t)\right]G(t)+p_1\cdot G_b,&
+			G(0)&=G_b,\\
+		\dot X(t)&=-p_2X+p_3\left[I(t)-I_b\right],&
+			X(0)&=0.
+	\end{align}
+	Numbering may be suppressed by using environment \texttt{align*}.
+\end{frame}
+
+\begin{frame}{Delimiters}
+	\begin{itemize}
+		\item Delimiters act logically like parentheses
+		\item Can only be used in math mode (though the related symbols may be used in text mode)
+		\item Delimiters should ``fit'' around the expressions they encompass: precede with \texttt{\textbackslash left} and \texttt{\textbackslash right} for auto-sizing.
+	\end{itemize}\vspace{-0.5cm}
+	\onslide<2->{
+	\begin{table}[t]
+		\caption{\LaTeX{} Delimiters}
+		\begin{tabular}{| l | c |}\hline
+			Delimiter & Text\\ \hline
+			Parentheses & \texttt{( )} \\ \hline
+			Brackets & \texttt{[ ]} \\ \hline
+			Braces & \texttt{\textbackslash \{ \textbackslash \}} \\ \hline
+			Angle Brackets & \texttt{\textbackslash langle \textbackslash rangle}  \\ \hline
+			Vertical Lines & \texttt{\textbackslash lvert \textbackslash rvert} \\ \hline
+			Double Vertical Lines & \texttt{\textbackslash lVert \textbackslash rVert} \\ \hline
+		\end{tabular}
+	\end{table}
+	}
+\end{frame}
+
+\begin{frame}{Math Fonts}
+	\begin{table}
+		\centering
+		\begin{tabular}{| l | c | c | c |}\hline
+			Font & Command & Examples & Required Packages \\ \hline\hline
+			Blackboard & \texttt{\textbackslash mathbb\{\}} & $\mathbb{N},\mathbb{Z},\mathbb{R},\mathbb{C}$ & \texttt{amssymb}\\ \hline
+			Calligraphic & \texttt{\textbackslash mathcal\{\}} & $\mathcal{R},\mathcal{B},\mathcal{P}$ & None\\ \hline
+			Roman & \texttt{\textbackslash mathrm\{\}} & $\mathrm{A},\mathrm{B},\mathrm{K}$& None\\ \hline
+			Italic & \texttt{\textbackslash mathit\{\}} & $\mathit{123},\mathit{abc},\mathit{ABC}$& None\\ \hline
+			Script & \texttt{\textbackslash mathscr\{\}} & $\mathscr{C},\mathscr{L},\mathscr{B}$ & \texttt{mathrsfs}\\ \hline
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}{Additional Resources}
+	\begin{itemize}
+		\item \url{https://www.overleaf.com/learn}
+		\item \url{https://www.latex-tutorial.com}
+		\item \url{https://tex.stackexchange.com}
+		\item \url{https://detexify.kirelabs.org/classify.html}
+		\item \url{http://ctan.math.washington.edu/tex-archive/macros/latex/required/amsmath/amsldoc.pdf}
+		\item Workshop today, 1-3 pm (yay!)
+	\end{itemize}
+\end{frame}
+
+
+
+
+
+
+\end{document}
+
