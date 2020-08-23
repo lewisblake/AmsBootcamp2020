@@ -1,0 +1,123 @@
+---
+title: "Data Exploration"
+author: "Laura Albrecht"
+date: "8/19/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Here we will do some data exploration and calculations. First, make sure you have the tidyverse package installed.
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+1. Generate and save a vector of 50 random variables from a distribution of your choice (rnorm, rpois, rbinom, etc.)
+
+```{r}
+
+```
+
+
+2. Look at some of the summary statistics (summary(), mean(), sd(), var(), etc) and see how closely the data follows what you would expect to see.
+
+```{r}
+
+```
+
+3. Plot your random data in a few different ways to visualize the distribution (i.e. scatterplot, boxplot(), hist(), density plot)
+
+```{r}
+
+```
+
+
+
+
+
+4. First install and then load the tidyverse package. Let's use the starwars data that is included with the tidyverse to create a linear model. First, let's look at the data using str().  
+
+```{r}
+
+```
+
+It is kind of a messy output to read because the last three columns are lists. Use the glimpse() function from the dplyr package instead, it is a similar function but handles lists in a betteer way. 
+```{r}
+
+```
+
+Now, let's create a BMI column using the mutate function (try looking at the help file for mutate first but the answer is on one of my slides if needed.) Note: BMI = mass/(height^2)
+
+```{r}
+
+```
+
+
+
+Make a scatter plot of  mass vs height using the plot() function.
+
+```{r}
+
+```
+
+There is one extreme outlier, let's remove this outlier before fitting the model. Find the value and delete that row from the data frame. Name this new dataframe something different. (There are many different ways you could remove this data point: find the max() of the mass column and remove that row, use a logical operator like mass < 1000). Plot the new dataframe without the outlier.
+
+```{r}
+
+```
+
+Now, lets fit a model using the new dataframe without Jabba the Hut. Save your model something like my_reg or starwars_lm. Use summary() on your model object to see a summary of the model (coefficients, R^2, etc).
+
+```{r}
+
+```
+
+
+
+Now, using the base R plotting, plot the data again and then use abline(my_reg) to add the best fit line created from the model.
+
+```{r}
+
+```
+
+Let's make the same plot using ggplot now. Remember the x, y coordinates need to be passed to the aes() term. You can customize your plot in different ways if you would like. 
+
+Template:
+ggplot(data, aes(x = x, y = y)) + geom_point()
+
+```{r}
+
+```
+
+Save the plot above as 'p'. Now let's add the regression line using geom_smooth(method = "lm"). You can just add this layer to p. 
+
+```{r}
+
+```
+
+In this case, we didn't even have to create a linear model to plot the line! Notice that it also displays the confidence interval by default. You can remove this by setting se = FALSE if desired. 
+
+
+5. Load the top50.csv data set. This is a dataframe that includes the top 50 songs on spotify from 2019. Look at the data to get an understanding of the different variables included
+
+```{r}
+
+```
+
+
+
+5. How many songs does each artist have on the list? Which genre of song is in the top 50 the most?
+
+```{r}
+
+```
+
+
+6. Visualize the data in a way that seems interesting to you. Maybe plot two of the variables against eachother to see if there is a relationship.
+
+```{r}
+
+```
+
+
+7. Type in data() to the console to see all of the built-in data sets included in R and in the tidyverse packages. Choose a data set that looks interesting to you and play around with some of the ways to summarize/visualize the data (summary(), plot(), boxplot(), etc.)
